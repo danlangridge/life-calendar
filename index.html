@@ -1,0 +1,69 @@
+<html>
+<head>
+
+</head>
+
+<body>
+<h1>Life Calendar</h1>
+<canvas id="LifeCalendar" width="200" height="100"></canvas>
+
+<script>
+var canvas = document.getElementById("LifeCalendar");
+var context = canvas.getContext('2d');
+
+context.canvas.width = window.innerWidth;
+context.canvas.height = window.innerHeight;
+
+var dayCenterX = 0; 
+var dayCenterY = 0;
+var dayRadius = 2;
+var padding = dayRadius*2 + 3;
+var canvasXPadding = padding;
+var canvasYPadding = padding;
+
+var days = 200;
+var row = 0;
+var fill = 'green';
+
+var dateBorn = new Date(1990,09,01);
+var currentDate = new Date(2015,12,16);
+
+var oneDay = 24*60*60*1000;
+
+var daysAlive = Math.round(Math.abs((dateBorn.getTime() - currentDate.getTime())/(oneDay)));
+
+var yearsTotal = 70;
+var daysYear = 365;
+var daysTotal = daysYear*yearsTotal; 
+
+
+var daysDrawn = 0;    
+
+for (;;) { 
+    for (j = 0; j*padding <= window.innerWidth && daysDrawn <= daysTotal; j++) {
+        centerX = j*padding + canvasXPadding;
+        centerY = row*padding + canvasYPadding;
+        if ( daysAlive >= daysDrawn) {
+            drawDay(centerX, centerY, dayRadius, 'white');
+        } else {
+            drawDay(centerX, centerY, dayRadius, 'black');
+        }
+        daysDrawn++; 
+    }
+    if (daysDrawn >= daysTotal) break;
+    row++
+}
+
+function drawDay(centerX, centerY, radius, fill) {
+    context.beginPath();
+    context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = fill;
+    context.fill();
+    context.lineWidth = 1;
+    context.strokeStyle = '#003300';
+    context.stroke();
+}
+</script>
+
+</body>
+</html>
